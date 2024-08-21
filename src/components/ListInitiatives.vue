@@ -23,10 +23,11 @@ function Rolling (index: any) {
 
 <template>
     <div class="players-list">
-        <div class="player-line" v-for="(player, index) in players" :key="index" :data-ally="player.player ? 'true' : 'false'">
+        <div v-if="players.length > 0" class="player-line" v-for="(player, index) in players" :key="index" :data-ally="player.player ? 'true' : 'false'">
             <div class="name">
+                <span class="text-shadow">{{ player.player ? 'Aliado' : 'Inimigo'}}</span>
                 <input placeholder="Nome do jogador" type="text" name="name" :value="player.name" @input="event => setInput(players, index, 'name', event)">
-                <span v-if="player.health_points < 1">(Caído)</span>
+                <span class="alert" v-if="player.health_points < 1">(Caído)</span>
             </div>
             <div class="inputs">
                 <label for="">
@@ -42,6 +43,12 @@ function Rolling (index: any) {
                     <input placeholder="Pontos de vida" type="text" name="health_points" :value="player.health_points"  @input="event => setInput(players, index, 'health_points', event, true)">
                 </label>
             </div>
+        </div>
+        <div v-else>
+            <h4>
+                Não existem jogadores cadastrados
+            </h4>
+            <p>😮‍💨</p>
         </div>
     </div>
 
@@ -68,8 +75,21 @@ function Rolling (index: any) {
     border: 0px solid;
 }
 .name span {
-    color: red;
     font-weight: bold;
+}
+.name span.alert {
+    color: red;
+}
+.name span.warning {
+    color: yellow;
+}
+.name span.success {
+    color: yellowgreen;
+}
+
+.text-shadow {
+    border-bottom: 1px solid #666;
+    text-shadow: 2px 1px 1px #666;
 }
 
 .players-list {
@@ -78,8 +98,11 @@ function Rolling (index: any) {
     flex: 3;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 0rem 0rem 1rem 0rem;
+    padding: 0rem 0rem 0rem 0rem;
+    width: 100%;
+    max-height: calc(100% - 4rem - 9rem);
 }
+
 .players-list .player-line:not(:last-of-type) {
     margin: 1rem 0px;
     padding-bottom: 1rem;
@@ -95,5 +118,17 @@ function Rolling (index: any) {
 
 .inputs {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
+
+.inputs label {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+
 </style>

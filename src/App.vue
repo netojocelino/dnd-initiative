@@ -2,38 +2,37 @@
 import { ref } from 'vue'
 import ListInitiatives from './components/ListInitiatives.vue'
 import ActionsRow from './components/ActionsRow.vue'
-import { Player } from './types/player';
 
 const header = {
     title: 'Listar iniciativas',
 }
 
 const players = ref([
-    {
-        player: false,
-        name: 'Bad, o bandido',
-        class_armor: 14,
-        health_points: 20,
-        initiative: Math.ceil((Math.random() * 2000) % 20),
-    },{
-        player: true,
-        name: 'Wis, o Sábio',
-        class_armor: 14,
-        health_points: 20,
-        initiative: Math.ceil((Math.random() * 2000) % 20),
-    },{
-        player: true,
-        name: 'Luz&Fé, o caído',
-        class_armor: 14,
-        health_points: 0,
-        initiative: Math.ceil((Math.random() * 2000) % 20),
-    }, {
-        player: true,
-        name: 'Carlos, o humilde',
-        class_armor: 14,
-        health_points: 20,
-        initiative: Math.ceil((Math.random() * 2000) % 20),
-    },
+{
+    player: false,
+    name: 'Mané Perninha',
+    class_armor: 15,
+    health_points: 38,
+    initiative: Math.ceil((Math.random() * 2000) % 20) + 3,
+},{
+    player: true,
+    name: 'HG-7',
+    class_armor: 18,
+    health_points: 49,
+    initiative: Math.ceil((Math.random() * 2000) % 20) + 1,
+},{
+    player: true,
+    name: 'Salazar',
+    class_armor: 18,
+    health_points: 44,
+    initiative: Math.ceil((Math.random() * 2000) % 20),
+}, {
+    player: true,
+    name: 'Truna',
+    class_armor: 19,
+    health_points: 33,
+    initiative: Math.ceil((Math.random() * 2000) % 20) + 1,
+},
 ])
 
 
@@ -76,7 +75,10 @@ function sortList () {
     }
 }
 function clearList () {
-    console.log('clear Player list on app.vue')
+    const length = players.value.length;
+    for (let index = 0; index < length; index++) {
+        players.value.pop();
+    }
 }
 </script>
 
@@ -91,6 +93,12 @@ function clearList () {
       <ListInitiatives @update-initiative="updateInitiative" :players="players" />
 
       <ActionsRow @new-player="addPlayer" @new-enemy="addEnemy" @sort-list="sortList" @clear-list="clearList" :players="players" />
+
+      <footer>
+        <p>
+            Desenvolvido apenas para entender alguns comportamentos do vue
+        </p>
+      </footer>
     </div>
 </template>
 
@@ -98,9 +106,35 @@ function clearList () {
 .template {
     display: flex;
     flex-direction: column;
-    /* flex: 1; */
-    height: 100%;
+    flex: 1;
+    /*height: 100%;*/
+    padding: 0;
+    width: 100%;
     min-height: 100%;
+}
+
+.template header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-height: 4rem;
+}
+
+.template footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* max-height: 2rem; */
+    line-height: 1rem;
+}
+.template footer p {
+    color: #000;
+    cursor: pointer;
+}
+.template footer p:hover,
+.template footer p:active
+{
+    color: #646cff;
 }
 
 .logo {

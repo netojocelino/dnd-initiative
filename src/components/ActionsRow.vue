@@ -10,8 +10,8 @@ defineProps<{ players: Player[] }>()
     <div class="actions">
         <button type="button" @click="$emit('newPlayer')">Novo jogador</button>
         <button type="button" @click="$emit('newEnemy')">Novo Inimigo</button>
-        <button type="button" @click="$emit('sortList')">Ordenar</button>
-        <button type="button" @click="$emit('clearList')">Limpar</button>
+        <button :disabled="players.length < 1" type="button" @click="$emit('sortList')">Ordenar</button>
+        <button :disabled="players.length < 1" type="button" @click="$emit('clearList')">Limpar</button>
     </div>
 </template>
 
@@ -21,6 +21,7 @@ defineProps<{ players: Player[] }>()
     flex-direction: row;
     flex: 1;
     max-height: 5rem;
+    height: 10rem;
     gap: 2;
 }
 
