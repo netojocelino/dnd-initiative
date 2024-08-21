@@ -4,20 +4,20 @@ import { Player } from '../types/player';
 
 defineProps<{ players: Player[] }>()
 
-function setInput (obj: Object, index: number, column: string, event: any, isNumber = false) {
+function setInput (obj: any, index: number, column: string, event: any, isNumber = false) {
     if (event.target && event.target.value) {
         obj[index][column] = (isNumber) ? event.target.value : (new Number(event.target.value))
     }
 }
 
-function Rolling (index: any) {
-    function cb (input: any) {
-        console.log('cb: ', input)
-    }
-    // players[index] = 
-    console.log('rolling', index)
-    return cb
-}
+// function Rolling (index: any) {
+//     function cb (input: any) {
+//         console.log('cb: ', input)
+//     }
+//     // players[index] = 
+//     console.log('rolling', index)
+//     return cb
+// }
 
 </script>
 
