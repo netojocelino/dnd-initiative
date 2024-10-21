@@ -27,7 +27,15 @@ function setInput (obj: any, index: number, column: string, event: any, isNumber
             <div class="name">
                 <span class="text-shadow">{{ player.player ? 'Aliado' : 'Inimigo'}}</span>
                 <input placeholder="Nome do jogador" type="text" name="name" :value="player.name" @input="event => setInput(players, index, 'name', event)">
+                <button type="button" v-on:click="() => $emit('add-condition', player.name, index)">Condições</button>
                 <span class="alert" v-if="player.health_points < 1">(Caído)</span>
+
+                <span
+                    v-for="item in player.conditions"
+                    :key="item.id"
+                    class="alert"
+                    :title="item.name"
+                >{{ item.name }}</span>
             </div>
             <div class="inputs">
                 <label for="">
@@ -85,6 +93,9 @@ function setInput (obj: any, index: number, column: string, event: any, isNumber
 }
 .name span.success {
     color: yellowgreen;
+}
+.name button {
+    min-width: 10rem;
 }
 
 .text-shadow {

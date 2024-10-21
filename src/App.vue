@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import ListInitiatives from './components/ListInitiatives.vue'
 import ActionsRow from './components/ActionsRow.vue'
+import Modal from './components/Modal.vue'
 
 const header = {
     title: 'Listar iniciativas',
@@ -14,27 +15,49 @@ const players = ref([
     class_armor: 15,
     health_points: 38,
     initiative: Math.ceil((Math.random() * 2000) % 20) + 3,
+    conditions: [],
 },{
     player: true,
     name: 'HG-7',
     class_armor: 18,
     health_points: 49,
     initiative: Math.ceil((Math.random() * 2000) % 20) + 1,
+    conditions: [],
 },{
     player: true,
     name: 'Salazar',
     class_armor: 18,
     health_points: 44,
     initiative: Math.ceil((Math.random() * 2000) % 20),
+    conditions: [],
 }, {
     player: true,
     name: 'Truna',
     class_armor: 19,
     health_points: 33,
     initiative: Math.ceil((Math.random() * 2000) % 20) + 1,
+    conditions: [],
 },
 ])
 
+const showModal = ref(false)
+const userId = ref(-1)
+
+const playerStates = ref([
+    {
+        id: 1,
+        name: 'Caído',
+    },{
+        id: 2,
+        name: 'Atordoado',
+    },{
+        id: 3,
+        name: 'Enfeitiçado',
+    },{
+        id: 4,
+        name: 'Surpreso',
+    },
+]);
 
 function addPlayer () {
     players.value.push({
@@ -90,9 +113,32 @@ function clearList () {
             </h2>
         </header>
     
-      <ListInitiatives @update-initiative="updateInitiative" :players="players" />
+      <ListInitiatives
+            @add-condition="(playerName, index) => {
+
+                if (index < 0) return;
+
+                userId = index
+                showModal = true;
+            }"
+            @update-initiative="updateInitiative"
+            :players="players"
+        />
 
       <ActionsRow @new-player="addPlayer" @new-enemy="addEnemy" @sort-list="sortList" @clear-list="clearList" :players="players" />
+
+      <Modal
+        :states="playerStates"
+        :showing="showModal"
+        :userId="userId"
+        @shows="(attr) => { console.log({attr}); showModal = attr}"
+        @add-states="(attr, index) => {
+            players[index].conditions = attr;
+
+            showModal = false
+            console.log(players)
+        }"
+    />
 
       <footer>
         <p>
