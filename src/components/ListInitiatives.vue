@@ -6,7 +6,7 @@ defineProps<{ players: Player[] }>()
 
 function setInput (obj: any, index: number, column: string, event: any, isNumber = false) {
     if (event.target && event.target.value) {
-        obj[index][column] = (isNumber) ? event.target.value : (new Number(event.target.value))
+        obj[index][column] = (!isNumber) ? event.target.value : (new Number(event.target.value))
     }
 }
 
@@ -26,7 +26,7 @@ function setInput (obj: any, index: number, column: string, event: any, isNumber
         <div v-if="players.length > 0" class="player-line" v-for="(player, index) in players" :key="index" :data-ally="player.player ? 'true' : 'false'">
             <div class="name">
                 <span class="text-shadow">{{ player.player ? 'Aliado' : 'Inimigo'}}</span>
-                <input placeholder="Nome do jogador" type="text" name="name" :value="player.name" @input="event => setInput(players, index, 'name', event)">
+                <input placeholder="Nome do jogador" type="text" name="name" :value="player.name" @input="event => setInput(players, index, 'name', event, false)">
                 <button type="button" v-on:click="() => $emit('add-condition', player.name, index)">Condições</button>
                 <span class="alert" v-if="player.health_points < 1">(Caído)</span>
 
