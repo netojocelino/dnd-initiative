@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import ListInitiatives from './components/ListInitiatives.vue'
 import ActionsRow from './components/ActionsRow.vue'
 import Modal from './components/Modal.vue'
+import { PlayerCondition } from './types/player'
 
 const header = {
     title: 'Listar iniciativas',
@@ -66,6 +67,7 @@ function addPlayer () {
         initiative: 0,
         class_armor: 0,
         health_points: 0,
+        conditions: [],
     })
 }
 function addEnemy () {
@@ -75,6 +77,7 @@ function addEnemy () {
         initiative: 0,
         class_armor: 0,
         health_points: 0,
+        conditions: [],
     })
 }
 
@@ -115,6 +118,7 @@ function clearList () {
     
       <ListInitiatives
             @add-condition="(playerName, index) => {
+                console.log(`Atualizando dados de ${playerName}`)
 
                 if (index < 0) return;
 
@@ -133,7 +137,7 @@ function clearList () {
         :userId="userId"
         @shows="(attr) => { console.log({attr}); showModal = attr}"
         @add-states="(attr, index) => {
-            players[index].conditions = attr.filter(item => item.checked);
+            players[index].conditions = attr.filter((item: PlayerCondition): boolean => item.checked);
 
             showModal = false
             console.log(players)

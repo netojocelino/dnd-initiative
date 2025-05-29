@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { defineProps, onActivated, onMounted } from 'vue';
-import { PlayerState } from '../types/player';
+import { defineProps } from 'vue';
+import { PlayerCondition, PlayerState } from '../types/player';
 
 type PlayerNewState = PlayerState & {
     available?: boolean
 }
 
-const newStates: {
-    id: number,
-    name?: string,
-    checked: boolean,
-}[] = [];
+const newStates: PlayerCondition[] = [];
 
 defineProps<{ 
     userId: number,
@@ -45,9 +41,9 @@ defineProps<{
                             :value="state.id"
                             v-on:change="(item) => {
                                 const $item = item.target;
-                                const value = item.target.value as number;
-                                // const value = item.target.value as number;
-                                const checked = $item.checked as boolean;
+                                if (item.target == null) return;
+                                const value = new Number(item.target.value);
+                                const checked = $item.checked == true;
 
                                 const findIndex = newStates.findIndex((item) => item.id == value)
 
