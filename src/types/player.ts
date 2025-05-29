@@ -17,7 +17,7 @@ export type PlayerState = {
 }
 
 export type PlayerCondition = {
-    id: number,
+    id: string,
     name?: string,
     checked: boolean,
 }

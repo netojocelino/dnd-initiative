@@ -40,12 +40,12 @@ defineProps<{
                             :data-name="state.name"
                             :value="state.id"
                             v-on:change="(item) => {
-                                const $item = item.target;
-                                if (item.target == null) return;
-                                const value = new Number(item.target.value);
+                                const $item = (<HTMLInputElement> item.target);
+                                if ($item == null) return;
+                                const value = $item.value;
                                 const checked = $item.checked == true;
 
-                                const findIndex = newStates.findIndex((item) => item.id == value)
+                                const findIndex = newStates.findIndex((item) => `${item.id}` == value)
 
                                 if (findIndex < 0) {
                                     newStates.push({
