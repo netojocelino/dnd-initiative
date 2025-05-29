@@ -25,14 +25,13 @@ defineProps<{
     <div class="modal">
         <div class="container">
             <h3>Modal</h3>        
-    
-    
+
             <form action="">
-    
-                <label for="">
+
+                <!-- <label for="">
                     <span>Turnos</span>
-                    <input type="number" placeholder="Qt. de turnos" min="1">
-                </label>
+                    <input type="number" placeholder="Qt. de turnos" min="1" v-change="turns">
+                </label> -->
 
                 <div v-if="states.length > 0" style="display: flex; flex-direction: column;">
                     <span style="display: flex; align-items: flex-start; border-bottom: 1px solid; padding-left: 10px;">Estado</span>
@@ -49,9 +48,7 @@ defineProps<{
                                 const value = item.target.value as number;
                                 // const value = item.target.value as number;
                                 const checked = $item.checked as boolean;
-                                
-                                console.log('index: ', $item.dataset.name)
-                                
+
                                 const findIndex = newStates.findIndex((item) => item.id == value)
 
                                 if (findIndex < 0) {

@@ -133,7 +133,7 @@ function clearList () {
         :userId="userId"
         @shows="(attr) => { console.log({attr}); showModal = attr}"
         @add-states="(attr, index) => {
-            players[index].conditions = attr;
+            players[index].conditions = attr.filter(item => item.checked);
 
             showModal = false
             console.log(players)
